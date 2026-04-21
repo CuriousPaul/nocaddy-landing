@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그린패스 — 2인 노캐디 골프 예약, AI가 뚫어드립니다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-deep: #0d2b1e;
+  --green-mid: #1a4a30;
+  --green-light: #2d6e47;
+  --green-accent: #4a9e6d;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --white: #f8f6f0;
+  --white-pure: #ffffff;
+  --text-muted: #8a9b8e;
+  --border: rgba(201,168,76,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--green-deep);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(45,110,71,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 80% 20%, rgba(74,158,109,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.015) 80px, rgba(255,255,255,0.015) 81px),
+    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.015) 80px, rgba(255,255,255,0.015) 81px);
+  pointer-events: none;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(13,43,30,0.95), transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.logo span {
+  color: var(--white);
+  font-weight: 400;
+}
+
+.nav-badge {
+  font-size: 12px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+
+.hero-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero-title .highlight {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  margin-bottom: 64px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s forwards;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold-light);
+  display: block;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-cta {
+  opacity: 0;
+  animation: fadeUp 0.8s 0.9s forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--green-deep);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(201,168,76,0.35);
+}
+
+.btn-primary svg {
+  width: 18px; height: 18px;
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover svg { transform: translateX(4px); }
+
+.btn-secondary {
+  display: inline-block;
+  margin-left: 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-decoration: none;
+  padding: 18px 24px;
+  transition: color 0.2s;
+}
+
+.btn-secondary:hover { color: var(--white); }
+
+/* ─── PAIN SECTION ─── */
+.section {
+  padding: 120px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 48px;
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2px;
+  margin-bottom: 80px;
+}
+
+.pain-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 36px 32px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.pain-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.pain-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.pain-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.pain-text strong {
+  color: var(--white);
+  display: block;
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+/* ─── HOW IT WORKS ─── */
+.how-section {
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 120px 24px;
+}
+
+.how-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: calc(12.5% + 32px);
+  right: calc(12.5% + 32px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+  opacity: 0.4;
+}
+
+.step {
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+
+.step-num {
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--gold);
+  background: var(--green-deep);
+  position: relative;
+  z-index: 1;
+}
+
+.step-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── PRICING / TRUST ─── */
+.trust-section {
+  padding: 120px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.pricing-card {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(45,110,71,0.08));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 48px 40px;
+}
+
+.price {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.price-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.price-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.price-items li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.price-items li::before {
+  content: '✓';
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 0.3s;
+}
+
+.trust-badge:hover {
+  border-color: rgba(201,168,76,0.3);
+}
+
+.trust-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.trust-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: var(--white);
+}
+
+.trust-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── FORM SECTION ─── */
+.form-section {
+  background: linear-gradient(to bottom, transparent, rgba(26,74,48,0.3));
+  border-top: 1px solid var(--border);
+  padding: 120px 24px;
+}
+
+.form-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.form-subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.reservation-form {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px 40px;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 14px 18px;
+  color: var(--white);
+  font-size: 15px;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.08);
+}
+
+.form-input::placeholder { color: rgba(255,255,255,0.25); }
+
+.form-select option {
+  background: var(--green-deep);
+  color: var(--white);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.deposit-note {
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 6px;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--gold-light);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.security-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+.form-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .nav { padding: 16px 20px; }
+  .hero-stats { gap: 28px; flex-wrap: wrap; }
+  .trust-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .steps::before { display: none; }
+  .reservation-form { padding: 32px 24px; }
+}
+
+/* ─── LIVE SECTION ─── */
+.live-section {
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 24px;
+}
+
+.live-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.live-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background: #ff4444;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(255,68,68,0.4); }
+  50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 0 6px rgba(255,68,68,0); }
+}
+
+.live-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #ff6666;
+  background: rgba(255,68,68,0.1);
+  border: 1px solid rgba(255,68,68,0.3);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.live-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.live-updated {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.live-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.live-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 20px 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.live-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+}
+
+.live-card.status-open::before { background: #4ade80; }
+.live-card.status-soon::before { background: var(--gold); }
+.live-card.status-limited::before { background: #fb923c; }
+
+.live-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-2px);
+}
+
+.live-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.live-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.live-card-region {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.live-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.badge-open { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+.badge-soon { background: rgba(201,168,76,0.15); color: var(--gold-light); border: 1px solid rgba(201,168,76,0.3); }
+.badge-limited { background: rgba(251,146,60,0.15); color: #fb923c; border: 1px solid rgba(251,146,60,0.3); }
+
+.live-card-info {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.live-card-info strong {
+  color: var(--white);
+}
+
+.live-card-cta {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.live-card-cta::after { content: '→'; }
+
+/* ─── GOLF COURSE LIST ─── */
+.courses-section {
+  padding: 80px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.course-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.course-chip:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.05);
+}
+
+.course-chip.hot {
+  border-color: rgba(201,168,76,0.4);
+  color: var(--gold-light);
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">Green<span>Pass</span></div>
+  <span class="nav-badge">2인 노캐디 골프 예약 AI</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">AI 골프 예약 컨시어지</p>
+  <h1 class="hero-title">
+    원하는 구장,<br>
+    원하는 날짜.<br>
+    <span class="highlight">우리가 뚫어드립니다.</span>
+  </h1>
+  <p class="hero-subtitle">
+    2인 노캐디 골프 예약, 언제나 경쟁이 치열하죠.<br>
+    GreenPass AI가 오픈 즉시 자동으로 예약합니다.
+  </p>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">화요일</span>
+      <span class="stat-label">포레스트힐 오픈 17:30</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">8주 전</span>
+      <span class="stat-label">에코랜드 2인 오픈</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">성공 시</span>
+      <span class="stat-label">수수료만 받습니다</span>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#reserve" class="btn-primary">
+      예약 요청하기
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+    <a href="#how" class="btn-secondary">어떻게 작동하나요?</a>
+  </div>
+</section>
+
+<!-- LIVE TICKER -->
+<div class="live-section">
+  <div class="live-inner">
+    <div class="live-header">
+      <span class="live-dot"></span>
+      <span class="live-label">LIVE</span>
+      <span class="live-title">지금 예약 가능 / 오픈 임박 구장</span>
+      <span class="live-updated" id="liveUpdated">방금 업데이트</span>
+    </div>
+    <div class="live-cards" id="liveCards"></div>
+  </div>
+</div>
+
+<!-- PAIN -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+  <span class="section-label" style="padding-top:80px;display:block;">왜 필요한가요</span>
+  <h2 class="section-title">2인 노캐디 예약,<br>이런 경험 있으시죠?</h2>
+</div>
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 80px;">
+  <div class="pain-grid">
+    <div class="pain-item">
+      <span class="pain-icon">⏰</span>
+      <div class="pain-text">
+        <strong>오픈 즉시 마감</strong>
+        화요일 17:30 오픈인데 5분도 안 돼 마감. 놓치면 다음 주까지 기다려야 합니다.
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="pain-icon">📞</span>
+      <div class="pain-text">
+        <strong>전화 예약만 가능</strong>
+        빅토리아GC처럼 전화로만 예약되는 구장. 업무 중에 언제 전화하나요?
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="pain-icon">🔍</span>
+      <div class="pain-text">
+        <strong>구장마다 다른 오픈 패턴</strong>
+        솔모로는 4주 전 월요일 AM9시, 에코랜드는 8주 전... 외워서 다닐 수 없죠.
+      </div>
+    </div>
+    <div class="pain-item">
+      <span class="pain-icon">✈️</span>
+      <div class="pain-text">
+        <strong>결국 일본행</strong>
+        못 찾으면 비행기 타고 일본으로. 50~100만원을 더 씁니다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <span class="section-label">작동 방식</span>
+    <h2 class="section-title" style="margin-bottom:64px;">딱 4단계, 끝입니다</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">조건 입력</div>
+        <div class="step-desc">원하는 구장, 날짜 범위, 인원, 시간대를 입력합니다</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Deposit 결제</div>
+        <div class="step-desc">예약 시도 보증금 2만원을 결제합니다. 실패 시 전액 환불</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">AI 자동 예약</div>
+        <div class="step-desc">GreenPass AI가 오픈 시각에 맞춰 자동으로 예약을 시도합니다</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">결과 알림</div>
+        <div class="step-desc">성공 시 수수료 결제 + 예약 확인서 전달. 실패 시 즉시 환불</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="courses-section">
+  <span class="section-label">커버 구장</span>
+  <h2 class="section-title" style="margin-bottom:32px;">전국 주요 2인 노캐디 구장<br>모두 커버합니다</h2>
+  <div class="courses-grid">
+    <div class="course-chip hot">⭐ 포레스트힐CC</div>
+    <div class="course-chip hot">⭐ 빅토리아GC</div>
+    <div class="course-chip hot">⭐ 솔모로CC</div>
+    <div class="course-chip hot">⭐ 에코랜드GC(제주)</div>
+    <div class="course-chip">한양파인CC</div>
+    <div class="course-chip">락가든CC</div>
+    <div class="course-chip">비콘힐스CC</div>
+    <div class="course-chip">에덴블루CC</div>
+    <div class="course-chip">더 크로스비GC</div>
+    <div class="course-chip">해비치CC(제주)</div>
+    <div class="course-chip">웰리힐리CC</div>
+    <div class="course-chip">스프링베일GC</div>
+    <div class="course-chip">아도니스CC</div>
+    <div class="course-chip">비전힐스CC</div>
+    <div class="course-chip hot">+ 85개 구장</div>
+  </div>
+</section>
+
+<!-- TRUST + PRICING -->
+<section class="trust-section">
+  <div class="trust-grid">
+    <div>
+      <span class="section-label">요금</span>
+      <h2 class="section-title" style="margin-bottom:32px;">성공해야만<br>수수료 냅니다</h2>
+      <div class="pricing-card">
+        <div class="price">₩50,000</div>
+        <div class="price-sub">예약 성공 시 수수료 / 건</div>
+        <ul class="price-items">
+          <li>예약 실패 시 Deposit 100% 환불</li>
+          <li>다음 시도로 이월도 가능</li>
+          <li>성공률 실시간 공개</li>
+          <li>숙박 패키지 연동 (준비 중)</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <span class="section-label" style="margin-top:60px;display:block;">신뢰</span>
+      <h2 class="section-title" style="margin-bottom:32px;">믿고 맡길 수<br>있는 이유</h2>
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <span class="trust-icon">🔐</span>
+          <div>
+            <div class="trust-title">계정 정보 즉시 삭제</div>
+            <div class="trust-desc">예약 완료 즉시 구장 아이디/비밀번호를 암호화 삭제합니다. 저장하지 않습니다.</div>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="trust-icon">💰</span>
+          <div>
+            <div class="trust-title">실패하면 전액 환불</div>
+            <div class="trust-desc">예약 성공 시에만 수수료. 실패는 Deposit 즉시 환불 또는 다음 시도 이월.</div>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="trust-icon">📊</span>
+          <div>
+            <div class="trust-title">성공률 투명 공개</div>
+            <div class="trust-desc">구장별 예약 성공률을 실시간으로 공개합니다. 숨기지 않습니다.</div>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="trust-icon">⚡</span>
+          <div>
+            <div class="trust-title">오픈 직후 1분 내 시도</div>
+            <div class="trust-desc">AI가 예약 오픈 시각을 정확히 추적해 사람보다 빠르게 예약합니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="reserve">
+  <div class="form-inner">
+    <h2 class="form-title">지금 예약 요청하기</h2>
+    <p class="form-subtitle">원하는 조건을 입력하시면<br>GreenPass AI가 즉시 추적을 시작합니다</p>
+
+    <form class="reservation-form" onsubmit="handleSubmit(event)">
+
+      <!-- 구장 & 일정 -->
+      <div class="form-section-title">🏌️ 예약 조건</div>
+
+      <div class="form-group">
+        <label class="form-label">원하는 구장</label>
+        <select class="form-select">
+          <option value="">구장을 선택하세요</option>
+          <optgroup label="⭐ 인기 (예약 경쟁 심함)">
+            <option>포레스트힐CC (경기 포천)</option>
+            <option>빅토리아GC (경기 여주)</option>
+            <option>솔모로CC (경기 여주)</option>
+            <option>한양파인CC (경기 고양)</option>
+            <option>에코랜드GC (제주)</option>
+          </optgroup>
+          <optgroup label="수도권/경기">
+            <option>락가든CC (포천)</option>
+            <option>비콘힐스CC (홍천)</option>
+            <option>에덴블루CC (안성)</option>
+            <option>더 크로스비GC (이천)</option>
+            <option>아도니스CC (포천)</option>
+            <option>비전힐스CC (남양주)</option>
+          </optgroup>
+          <optgroup label="제주">
+            <option>해비치CC (제주)</option>
+            <option>아덴힐CC (제주)</option>
+            <option>라온CC (제주)</option>
+          </optgroup>
+          <option value="other">직접 입력 (기타)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">희망 날짜 (시작)</label>
+          <input type="date" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">희망 날짜 (종료)</label>
+          <input type="date" class="form-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">인원</label>
+          <select class="form-select">
+            <option>2인</option>
+            <option>3인</option>
+            <option>4인</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">선호 시간대</label>
+          <select class="form-select">
+            <option>오전 (06:00~10:00)</option>
+            <option>오전 후반 (10:00~12:00)</option>
+            <option>오후 (12:00~15:00)</option>
+            <option>상관없음</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 구장 계정 -->
+      <div class="form-section-title">🔐 구장 계정 정보</div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
+        AI가 해당 구장 홈페이지에 로그인해 예약합니다. 정보는 예약 완료 즉시 삭제됩니다.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">구장 아이디</label>
+          <input type="text" class="form-input" placeholder="홈페이지 로그인 아이디">
+        </div>
+        <div class="form-group">
+          <label class="form-label">구장 비밀번호</label>
+          <input type="password" class="form-input" placeholder="••••••••">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 연락처 -->
+      <div class="form-section-title">📱 연락처</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">이름</label>
+          <input type="text" class="form-input" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">연락처</label>
+          <input type="tel" class="form-input" placeholder="010-0000-0000" required>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Deposit -->
+      <div class="deposit-note">
+        <span>💳</span>
+        <div>
+          <strong style="display:block;margin-bottom:4px;">Deposit 20,000원</strong>
+          예약 성공 시 수수료 50,000원 추가 청구. 실패 시 전액 환불됩니다.
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+        Deposit 결제 후 예약 요청
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <div class="security-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        SSL 암호화 전송 · 계정 정보 예약 후 즉시 삭제 · 개인정보 제3자 제공 없음
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- GUIDE SECTION -->
+<section style="padding:100px 24px;background:rgba(255,255,255,0.015);border-top:1px solid var(--border);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <span class="section-label">직접 예약 가이드</span>
+    <h2 class="section-title" style="margin-bottom:12px;">직접 해도 돼요.<br>다만 이럴 때는 저희를 쓰세요.</h2>
+    <p style="color:var(--text-muted);font-size:16px;margin-bottom:56px;line-height:1.7;">GreenPass는 단순 정보 제공도 열린 곳입니다.<br>아래 구장별 직접 예약 방법을 확인하세요 — 그래도 너무 번거롭다 싶으시면 저희가 대신 합니다.</p>
+
+    <div id="guideCards" style="display:grid;gap:16px;"></div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:999;align-items:center;justify-content:center;padding:24px;">
+  <div id="modalBox" style="background:var(--green-mid);border:1px solid var(--border);border-radius:16px;max-width:560px;width:100%;padding:40px;position:relative;max-height:90vh;overflow-y:auto;">
+    <button onclick="closeModal()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:var(--text-muted);font-size:24px;cursor:pointer;line-height:1;">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:8px;font-family:'Playfair Display',serif;font-size:18px;color:var(--gold);">GreenPass</p>
+  <p>2인 노캐디 골프 예약 AI 컨시어지 · 문의: hello@greenpass.kr</p>
+  <p style="margin-top:12px;font-size:11px;">© 2026 GreenPass. 예약 대행 서비스로 구장 공식 서비스가 아닙니다.</p>
+</footer>
+
+<script>
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type=submit]');
+  const origHTML = btn.innerHTML;
+  const allSelects = form.querySelectorAll('select');
+  const allInputs = form.querySelectorAll('input');
+  const courseName = allSelects[0]?.value || '';
+  const partySize = parseInt(allSelects[1]?.value) || 2;
+  const timePref = allSelects[2]?.value || '';
+  const dateFrom = allInputs[0]?.value || '';
+  const dateTo = allInputs[1]?.value || '';
+  const loginId = allInputs[2]?.value || '';
+  const loginPw = allInputs[3]?.value || '';
+  const userName = allInputs[4]?.value || '';
+  const phone = allInputs[5]?.value || '';
+  if (!courseName) { alert('구장을 선택해주세요.'); return; }
+  if (!userName || !phone) { alert('이름과 연락처를 입력해주세요.'); return; }
+  const matchedCourse = COURSE_DETAIL.find(c => c.name && courseName.includes(c.name.substring(0,4)));
+  if (!matchedCourse || !matchedCourse._id) {
+    alert('구장을 다시 선택해주세요 (프로필 로딩 중일 수 있어요).');
+    return;
+  }
+  const payload = {
+    course_id: matchedCourse._id,
+    user_name: userName,
+    phone: phone,
+    preferred_dates: [dateFrom, dateTo].filter(Boolean).join(','),
+    party_size: partySize,
+    time_preference: timePref,
+    course_login_id: loginId || undefined,
+    course_login_pw: loginPw || undefined,
+  };
+  btn.innerHTML = '전송 중...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(API_BASE + '/api/requests', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (res.ok && data.id) {
+      btn.innerHTML = '✅ 요청 접수 완료!';
+      btn.style.background = 'linear-gradient(135deg,#4ade80,#22c55e)';
+      setTimeout(() => alert('예약 요청이 접수되었습니다!
+요청 ID: ' + data.id + '
+
+예약 시도 후 결과를 알려드릴게요.'), 200);
+    } else {
+      throw new Error(data.error || 'unknown');
+    }
+  } catch(err) {
+    btn.innerHTML = origHTML;
+    btn.disabled = false;
+    alert('오류가 발생했어요. hello@greenpass.kr 로 문의해주세요.');
+  }
+}
+
+// ─── API CONFIG ───
+const API_BASE = 'http://localhost:3001';
+
+async function fetchAndRender() {
+  try {
+    const res = await fetch(`${API_BASE}/api/courses`);
+    const data = await res.json();
+    const courses = data.courses || [];
+    if (!courses.length) return;
+    // LIVE_DATA 업데이트
+    const statusMap = {open:'open', soon:'soon', limited:'limited', closed:'closed'};
+    const badgeMap = {open:'지금 예약 가능', soon:'오픈 임박', limited:'잔여 타임 한정', closed:'마감'};
+    courses.forEach((c, i) => {
+      if (i < LIVE_DATA.length) {
+        LIVE_DATA[i]._id = c.id;
+        LIVE_DATA[i].name = c.name;
+        LIVE_DATA[i].region = c.region;
+        LIVE_DATA[i].status = c.status;
+        LIVE_DATA[i].badgeText = badgeMap[c.status] || LIVE_DATA[i].badgeText;
+        LIVE_DATA[i].info = `<strong>${c.open_pattern.split('·')[0].trim().slice(0,35)}</strong><br>${c.conditions.slice(0,40)}`;
+      }
+    });
+    // COURSE_DETAIL 업데이트
+    courses.forEach((c, i) => {
+      if (i < COURSE_DETAIL.length) {
+        COURSE_DETAIL[i]._id = c.id;
+        COURSE_DETAIL[i].name = c.name;
+        COURSE_DETAIL[i].region = c.region;
+        COURSE_DETAIL[i].phone = c.phone;
+        COURSE_DETAIL[i].homepage = c.homepage;
+        COURSE_DETAIL[i].openPattern = c.open_pattern;
+        COURSE_DETAIL[i].conditions = c.conditions;
+        COURSE_DETAIL[i].difficulty = c.difficulty_note;
+      }
+    });
+    renderLiveCards();
+    renderGuideCards();
+  } catch(e) { /* API 미연결 시 정적 fallback 유지 */ }
+}
+
+// ─── LIVE CARDS DATA ───
+// ─── DETAILED COURSE DATA ───
+const COURSE_DETAIL = [
+  {
+    name: '포레스트힐CC',
+    region: '경기 포천 화현면',
+    phone: '031-530-8888',
+    homepage: 'https://www.foresthill.kr',
+    openPattern: '매주 화요일 17:30 온라인 오픈 (6주 후 1주치)',
+    conditions: 'Forest 코스(6홈) 한정 · 2인 노캐디 전용 · 12홈 28만원~(주중)',
+    difficulty: '화요일 17:30 오픈 즉시 수분 내 마감 — 타이밍 실패 시 다음 주까지 대기',
+  },
+  {
+    name: '솔모로CC',
+    region: '경기 여주시 가남아트',
+    phone: '031-880-8000',
+    homepage: 'https://www.solmoro.com',
+    openPattern: '[평일] 4주 전 월요일 AM9:00 · [주말] 4주 전 금요일 AM9:00 (1회/월)',
+    conditions: '2인 예약 가능 · 18홈 선불리 없음 · 온라인 예약',
+    difficulty: '오픈 시각 정확히 놓치면 미어 없음 — AM8:50부터 대기 필수',
+  },
+  {
+    name: '에코랜드GC',
+    region: '제주시 조천싕 번영로',
+    phone: '064-802-8200',
+    homepage: 'https://jeju.ecoland.co.kr',
+    openPattern: '2인 라운딩: 출발일 8주 전 오픈 · 3~4인: 4주 전',
+    conditions: 'GPS 전동카트 노캐디 · 2인 주중 13만/주말 16만 · 카트비 5만(두명)',
+    difficulty: '2인은 8주 전이라 올리게 열림 — 4주 전에는 2인 타임 없음',
+  },
+  {
+    name: '빅토리아GC',
+    region: '경기 여주시 가남아트',
+    phone: '031-882-0001',
+    homepage: 'https://www.victoriacc.co.kr',
+    openPattern: '하루 전 잔여티 전화 예약만 — AM업무 중 직접 전화',
+    conditions: '주말 전 시간대 2인 가능 · 2인 추가 2만원/인 · 노캐디 기본',
+    difficulty: '전화를 언제 하나요? 업무 중 전화하기 어력고, 하루 전이라 올리게 마감',
+  },
+  {
+    name: '한양파인CC',
+    region: '경기 고양시 덕양구',
+    phone: '031-965-2233',
+    homepage: 'https://www.hanyang-pine.co.kr',
+    openPattern: '2~3주 전 온라인 오픈',
+    conditions: '2·3부 시간대 2인 가능 · 9홈/18홈 · 서울 최근접',
+    difficulty: '서울 차량 30분 접근 — 수도권 가장 경쟁 치열',
+  },
+  {
+    name: '비콘힐스CC',
+    region: '강원 홍천군',
+    phone: '033-435-4000',
+    homepage: 'https://www.beaconhills.co.kr',
+    openPattern: '2~3주 전 온라인 오픈',
+    conditions: '2인 가능 · 온라인 예약 가능 구장',
+    difficulty: '오픈 시각 정확만 맞치면 예약 가능',
+  },
+];
+
+const LIVE_DATA = [
+  {
+    name: '포레스트힐CC',
+    region: '경기 포천',
+    status: 'soon',
+    badgeText: '내일 오픈',
+    info: '<strong>내일 화요일 17:30</strong> 예약 오픈<br>Forest 코스 · 2인 노캐디 전용',
+    openPattern: '매주 화요일 17:30',
+  },
+  {
+    name: '솔모로CC',
+    region: '경기 여주',
+    status: 'soon',
+    badgeText: '7일 후 오픈',
+    info: '<strong>04-27 (월) AM9:00</strong> 예약 오픈<br>5월 25~28일 평일 타임',
+    openPattern: '4주 전 월요일 AM9:00',
+  },
+  {
+    name: '에코랜드GC',
+    region: '제주',
+    status: 'open',
+    badgeText: '지금 예약 가능',
+    info: '6월 이후 <strong>2인 타임</strong> 현재 오픈 중<br>8주 전 오픈 · 4주 전보다 경쟁 낮음',
+    openPattern: '8주 전 오픈 (2인)',
+  },
+  {
+    name: '빅토리아GC',
+    region: '경기 여주',
+    status: 'limited',
+    badgeText: '잔여 타임 한정',
+    info: '하루 전 잔여티 <strong>전화 예약</strong>만 가능<br>주말 전 시간대 2인 가능',
+    openPattern: '하루 전 전화',
+  },
+  {
+    name: '한양파인CC',
+    region: '경기 고양',
+    status: 'limited',
+    badgeText: '경쟁 치열',
+    info: '2·3부 시간대 <strong>2인 가능</strong><br>서울 최근접 퍼블릭 · 빠른 마감',
+    openPattern: '2~3주 전',
+  },
+  {
+    name: '비콘힐스CC',
+    region: '강원 홍천',
+    status: 'open',
+    badgeText: '예약 가능',
+    info: '<strong>2~3주 전</strong> 오픈 방식<br>온라인 예약 가능 구장',
+    openPattern: '2~3주 전',
+  },
+];
+
+function renderLiveCards() {
+  const container = document.getElementById('liveCards');
+  const now = new Date();
+  document.getElementById('liveUpdated').textContent =
+    `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} 업데이트`;
+
+  container.innerHTML = LIVE_DATA.map(d => `
+    <div class="live-card status-${d.status}" onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})">
+      <div class="live-card-top">
+        <div>
+          <div class="live-card-name">${d.name}</div>
+          <div class="live-card-region">${d.region}</div>
+        </div>
+        <span class="live-badge badge-${d.status}">${d.badgeText}</span>
+      </div>
+      <div class="live-card-info">${d.info}</div>
+      <div class="live-card-cta">이 구장 예약 맡기기</div>
+    </div>
+  `).join('');
+}
+
+renderLiveCards();
+setInterval(renderLiveCards, 60000);
+
+// ─── GUIDE CARDS ───
+function renderGuideCards() {
+  const container = document.getElementById('guideCards');
+  container.innerHTML = COURSE_DETAIL.map((c, i) => `
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;transition:all 0.2s;cursor:pointer;" onmouseenter="this.style.borderColor='rgba(201,168,76,0.35)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.07)'">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white);">${c.name}</span>
+          <span style="font-size:12px;color:var(--text-muted);">${c.region}</span>
+        </div>
+        <div style="font-size:14px;color:var(--text-muted);line-height:1.8;">
+          구장 전화: <a href="tel:${c.phone}" style="color:var(--gold);text-decoration:none;font-weight:600;">${c.phone}</a>
+          &nbsp;·&nbsp;
+          <a href="${c.homepage}" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:600;">홈페이지 예약↗</a><br>
+          <span style="color:rgba(255,255,255,0.5);">&#x1f550; ${c.openPattern}</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
+        <button onclick="openModal(${i})" style="background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);font-size:13px;font-weight:700;padding:10px 18px;border-radius:6px;cursor:pointer;white-space:nowrap;"크조건 보기">크조건 상세보기</button>
+        <button onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));border:none;color:var(--green-deep);font-size:13px;font-weight:700;padding:10px 18px;border-radius:6px;cursor:pointer;white-space:nowrap;">대신 예약하기</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderGuideCards();
+
+// API 데이터 가져오기 (fallback 이후 덮어쓰기)
+fetchAndRender();
+
+// ─── MODAL ───
+function openModal(i) {
+  const c = COURSE_DETAIL[i];
+  document.getElementById('modalContent').innerHTML = `
+    <div style="margin-bottom:24px;">
+      <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">&#127922; 직접 예약 가이드</div>
+      <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:4px;">${c.name}</div>
+      <div style="color:var(--text-muted);font-size:14px;">${c.region}</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:28px;">
+      <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:18px 20px;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">⏰ 예약 오픈 패턴</div>
+        <div style="font-size:15px;color:var(--white);line-height:1.6;">${c.openPattern}</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:18px 20px;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">💰 이용 조건</div>
+        <div style="font-size:15px;color:var(--white);line-height:1.6;">${c.conditions}</div>
+      </div>
+      <div style="background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:18px 20px;">
+        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#ff8888;margin-bottom:8px;">⚠️ 예약 난이도</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.8);line-height:1.6;">${c.difficulty}</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;">
+      <a href="tel:${c.phone}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-size:14px;font-weight:600;padding:14px;border-radius:8px;text-decoration:none;">&#128222; ${c.phone}</a>
+      <a href="${c.homepage}" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-size:14px;font-weight:600;padding:14px;border-radius:8px;text-decoration:none;">🌐 홈페 예약</a>
+    </div>
+
+    <div style="margin-top:16px;text-align:center;color:var(--text-muted);font-size:13px;padding:14px;border-top:1px solid rgba(255,255,255,0.06);">&#x1f916; 오픈 시각에 자동으로 잘슠하고 싶다면 &nbsp;<span onclick="closeModal();document.getElementById('reserve').scrollIntoView({behavior:'smooth'});" style="color:var(--gold);font-weight:700;cursor:pointer;">예약 대행 신청 →</span></div>
+  `;
+  const modal = document.getElementById('modal');
+  modal.style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// 스크롤 애니메이션
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.pain-item, .step, .trust-badge, .course-chip').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s, transform 0.6s';
+  observer.observe(el);
+});
+
+// 오늘 이전 날짜 비활성화
+const dateInputs = document.querySelectorAll('input[type="date"]');
+const today = new Date().toISOString().split('T')[0];
+dateInputs.forEach(input => input.min = today);
+</script>
+
+</body>
+</html>
