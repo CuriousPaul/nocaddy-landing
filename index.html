@@ -148,10 +148,9 @@ textarea.fc{resize:vertical;min-height:76px;}
 .qex-table{width:100%;border-collapse:collapse;min-width:380px;}
 .qex-table th{background:var(--gray-light);padding:10px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);text-align:left;}
 .qex-table th:last-child,.qex-table td:last-child{text-align:right;}
-.qex-table td{padding:12px 14px;font-size:13px;color:var(--charcoal);border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+.qex-table td{padding:11px 14px;font-size:13px;color:var(--charcoal);border-bottom:1px solid #f3f4f6;vertical-align:middle;}
 .qex-table tr:last-child td{border-bottom:none;}
-.qex-table .qex-cat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);background:var(--gray-light);}
-.qex-table .qex-cat td{padding:8px 14px;border-bottom:none;}
+.qex-table td small{display:block;font-size:11px;color:var(--gray);margin-top:2px;font-weight:400;}
 .qex-incl{display:inline-block;background:var(--green-pale);color:var(--green);font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;}
 .qex-doc-foot{padding:16px 24px;border-top:2px solid var(--charcoal);}
 .qex-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
@@ -335,19 +334,13 @@ textarea.fc{resize:vertical;min-height:76px;}
       </div>
     </div>
     <div class="qex-table-wrap"><table class="qex-table">
-      <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
+      <thead><tr><th>내역</th><th>수량</th><th>단가</th><th>금액</th></tr></thead>
       <tbody>
-        <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
-        <tr><td>그린피 (2인 보장, 노캐디)</td><td>2라운드</td><td>₩160,000</td><td>₩320,000</td></tr>
-        <tr><td>카트비 (2인)</td><td>2회</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr><td>2인 추가요금</td><td>-</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr class="qex-cat"><td colspan="4">🛏 숙박</td></tr>
-        <tr><td>APA호텔 후쿠오카 텐진 · 스탠다드 더블 (세금 포함)</td><td>2박</td><td>₩85,000</td><td>₩170,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">🚗 이동</td></tr>
-        <tr><td>공항 픽업 · 드롭 (정식 허가 차량)</td><td>2회</td><td>₩25,000</td><td>₩50,000</td></tr>
-        <tr><td>골프장 이동 (왕복 × 2)</td><td>2회</td><td>₩20,000</td><td>₩40,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
-        <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩30,000</td></tr>
+        <tr><td>그린피 — 2인 확정 · 노캐디<small>카트비 · 2인 추가요금 포함</small></td><td>2R</td><td>₩160,000</td><td>₩320,000</td></tr>
+        <tr><td>APA Hotel 후쿠오카 텐진<small>Standard Double · 세금 포함</small></td><td>2박</td><td>₩85,000</td><td>₩170,000</td></tr>
+        <tr><td>공항 송영<small>픽업 · 드롭 (왕복)</small></td><td>—</td><td>₩50,000</td><td>₩50,000</td></tr>
+        <tr><td>골프장 이동</td><td>2회</td><td>₩20,000</td><td>₩40,000</td></tr>
+        <tr><td>서비스 수수료</td><td>—</td><td>—</td><td>₩30,000</td></tr>
       </tbody>
     </table></div>
     <div class="qex-doc-foot">
@@ -387,22 +380,15 @@ textarea.fc{resize:vertical;min-height:76px;}
       </div>
     </div>
     <div class="qex-table-wrap"><table class="qex-table">
-      <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
+      <thead><tr><th>내역</th><th>수량</th><th>단가</th><th>금액</th></tr></thead>
       <tbody>
-        <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
-        <tr><td>그린피 (2인 보장, 노캐디)</td><td>3라운드</td><td>₩170,000</td><td>₩510,000</td></tr>
-        <tr><td>카트비 (2인)</td><td>3회</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr><td>2인 추가요금</td><td>-</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr class="qex-cat"><td colspan="4">🛏 숙박</td></tr>
-        <tr><td>사가 로여른 히노하류 료칸 · 일식 트윈 (조식 포함)</td><td>2박</td><td>₩130,000</td><td>₩260,000</td></tr>
-        <tr><td>주오 레거시 호텔 · 스탠다드 트윈</td><td>1박</td><td>₩75,000</td><td>₩75,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">♨️ 액티비티</td></tr>
-        <tr><td>대욕장 온천 입장</td><td>1회</td><td>₩15,000</td><td>₩15,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">🚗 이동</td></tr>
-        <tr><td>공항 픽업 · 드롭</td><td>2회</td><td>₩30,000</td><td>₩60,000</td></tr>
-        <tr><td>골프장 이동 (왕복 × 3)</td><td>3회</td><td>₩22,000</td><td>₩66,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
-        <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩50,000</td></tr>
+        <tr><td>그린피 — 2인 확정 · 노캐디<small>카트비 · 2인 추가요금 포함</small></td><td>3R</td><td>₩170,000</td><td>₩510,000</td></tr>
+        <tr><td>사가 로여른 히노하루 료칸<small>Standard Japanese Twin · 조식 포함</small></td><td>2박</td><td>₩130,000</td><td>₩260,000</td></tr>
+        <tr><td>주오 레거시 호텔<small>Standard Twin</small></td><td>1박</td><td>₩75,000</td><td>₩75,000</td></tr>
+        <tr><td>온천 입장<small>대욕장</small></td><td>1식</td><td>₩15,000</td><td>₩15,000</td></tr>
+        <tr><td>공항 송영<small>픽업 · 드롭 (왕복)</small></td><td>—</td><td>₩60,000</td><td>₩60,000</td></tr>
+        <tr><td>골프장 이동</td><td>3회</td><td>₩22,000</td><td>₩66,000</td></tr>
+        <tr><td>서비스 수수료</td><td>—</td><td>—</td><td>₩50,000</td></tr>
       </tbody>
     </table>
     <div class="qex-doc-foot">
@@ -442,23 +428,15 @@ textarea.fc{resize:vertical;min-height:76px;}
       </div>
     </div>
     <div class="qex-table-wrap"><table class="qex-table">
-      <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
+      <thead><tr><th>내역</th><th>수량</th><th>단가</th><th>금액</th></tr></thead>
       <tbody>
-        <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
-        <tr><td>그린피 (프리미엄 코스, 노캐디)</td><td>3라운드</td><td>₩230,000</td><td>₩690,000</td></tr>
-        <tr><td>카트비 (2인)</td><td>3회</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr><td>2인 추가요금</td><td>-</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr class="qex-cat"><td colspan="4">🛏 숙박</td></tr>
-        <tr><td>유후인 영화로 진 조세이 히노하류 료칸 · 디럭스 일식 (3대매 노천, 조·석식 포함)</td><td>3박</td><td>₩190,000</td><td>₩570,000</td></tr>
-        <tr><td>더 B 호텔 오사카 · 디럭스 트인</td><td>1박</td><td>₩100,000</td><td>₩100,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">♨️ 액티비티</td></tr>
-        <tr><td>프라이빗 노천 온천 (객실)</td><td>포함</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
-        <tr><td>저녁 식사 (이자카야 또는 현지 명식)</td><td>2회</td><td>₩40,000</td><td>₩80,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">🚗 이동</td></tr>
-        <tr><td>공항 픽업 · 드롭 (오사카/후쿠오카)</td><td>2회</td><td>₩40,000</td><td>₩80,000</td></tr>
-        <tr><td>전용 차량 (골프장 · 시내 전 구간)</td><td>4일</td><td>₩35,000</td><td>₩140,000</td></tr>
-        <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
-        <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩80,000</td></tr>
+        <tr><td>그린피 — 2인 확정 · 프리미엄 코스<small>노캐디 · 카트비 · 2인 추가요금 포함</small></td><td>3R</td><td>₩230,000</td><td>₩690,000</td></tr>
+        <tr><td>유후인 조세이 히노하루 료칸<small>Deluxe Japanese Suite · 노천탕 · 조석식 포함</small></td><td>3박</td><td>₩190,000</td><td>₩570,000</td></tr>
+        <tr><td>더 B 호텔 오사카<small>Deluxe Twin</small></td><td>1박</td><td>₩100,000</td><td>₩100,000</td></tr>
+        <tr><td>저녁 식사<small>현지 명식당 예약 (2인 코스)</small></td><td>2회</td><td>₩40,000</td><td>₩80,000</td></tr>
+        <tr><td>공항 송영<small>오사카 IN · 후쿠오카 OUT</small></td><td>—</td><td>₩80,000</td><td>₩80,000</td></tr>
+        <tr><td>전용 차량 상주<small>골프장 · 시내 전 구간</small></td><td>4일</td><td>₩35,000</td><td>₩140,000</td></tr>
+        <tr><td>서비스 수수료</td><td>—</td><td>—</td><td>₩80,000</td></tr>
       </tbody>
     </table>
     <div class="qex-doc-foot">
