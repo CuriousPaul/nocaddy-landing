@@ -122,26 +122,45 @@ textarea.fc{resize:vertical;min-height:76px;}
 .sd{font-size:13px;color:var(--gray);line-height:1.6;}
 
 /* QUOTE EXAMPLE */
-.quote-ex{background:var(--charcoal);padding:56px 24px;}
-.quote-ex .s-label{color:var(--accent);}
-.quote-ex .s-title{color:var(--white);}
-.quote-ex .s-desc{color:rgba(255,255,255,.6);}
-.qex-cards{display:grid;gap:16px;margin-bottom:20px;}
-.qex-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:22px;}
-.qex-card.qex-highlight{background:rgba(45,138,87,.18);border-color:rgba(45,138,87,.5);}
-.qex-badge{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:100px;display:inline-block;margin-bottom:12px;}
-.qex-a{background:rgba(212,168,67,.15);color:var(--accent);}
-.qex-b{background:rgba(45,138,87,.25);color:#4ade80;}
-.qex-c{background:rgba(139,92,246,.2);color:#c4b5fd;}
-.qex-title{font-size:18px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px;}
-.qex-items{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:7px;}
-.qex-items li{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;}
-.qex-price{display:flex;align-items:baseline;justify-content:space-between;background:rgba(255,255,255,.06);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
-.qex-label{font-size:11px;color:rgba(255,255,255,.5);font-weight:600;}
-.qex-amount{font-size:20px;font-weight:700;color:var(--accent);}
-.qex-card.qex-highlight .qex-amount{color:#4ade80;}
-.qex-note{font-size:11px;color:rgba(255,255,255,.35);}
-.qex-note-box{background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;}
+.quote-ex{background:var(--gray-light);padding:56px 24px;}
+.quote-ex .s-label{color:var(--green);}
+.qex-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.qex-tab{padding:8px 16px;border-radius:100px;border:1.5px solid #e5e7eb;background:#fff;font-size:12px;font-weight:700;color:var(--gray);cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;}
+.qex-tab.active{background:var(--green);border-color:var(--green);color:#fff;}
+.qex-doc{display:none;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+.qex-doc.active{display:block;}
+.qex-doc-head{padding:20px 24px 16px;border-bottom:2px solid var(--charcoal);display:flex;justify-content:space-between;align-items:flex-start;}
+.qex-co{display:flex;flex-direction:column;gap:2px;}
+.qex-co-name{font-size:15px;font-weight:700;color:var(--charcoal);}
+.qex-co-sub{font-size:11px;color:var(--gray);}
+.qex-meta{text-align:right;display:flex;flex-direction:column;gap:3px;}
+.qex-meta-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.qex-meta-no{font-size:13px;font-weight:700;color:var(--charcoal);}
+.qex-meta-date{font-size:11px;color:var(--gray);}
+.qex-type-bar{background:var(--charcoal);padding:10px 24px;display:flex;justify-content:space-between;align-items:center;}
+.qex-type-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.qex-type-val{font-size:13px;font-weight:700;color:#fff;}
+.qex-plan{padding:16px 24px;background:var(--green-pale);border-bottom:1px solid #e5e7eb;}
+.qex-plan-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+.qex-plan-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.qex-plan-pill{background:var(--white);border:1px solid rgba(26,92,58,.2);color:var(--green);font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;}
+.qex-table{width:100%;border-collapse:collapse;}
+.qex-table th{background:var(--gray-light);padding:10px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);text-align:left;}
+.qex-table th:last-child,.qex-table td:last-child{text-align:right;}
+.qex-table td{padding:12px 14px;font-size:13px;color:var(--charcoal);border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+.qex-table tr:last-child td{border-bottom:none;}
+.qex-table .qex-cat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);background:var(--gray-light);}
+.qex-table .qex-cat td{padding:8px 14px;border-bottom:none;}
+.qex-incl{display:inline-block;background:var(--green-pale);color:var(--green);font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;}
+.qex-doc-foot{padding:16px 24px;border-top:2px solid var(--charcoal);}
+.qex-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.qex-total-label{font-size:11px;color:var(--gray);}
+.qex-total-val{font-size:12px;font-weight:600;color:var(--charcoal);}
+.qex-grand{display:flex;justify-content:space-between;align-items:baseline;background:var(--charcoal);padding:14px 18px;border-radius:10px;margin-bottom:10px;}
+.qex-grand-label{font-size:13px;font-weight:700;color:#fff;}
+.qex-grand-val{font-size:22px;font-weight:700;color:var(--accent);}
+.qex-foot-note{font-size:11px;color:var(--gray);line-height:1.7;}
+.qex-note-box{background:var(--green-pale);border:1px solid rgba(26,92,58,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--green);line-height:1.6;margin-top:16px;}
 @media(min-width:640px){.qex-cards{grid-template-columns:repeat(3,1fr);}}
 
 /* FAQ */
@@ -278,51 +297,168 @@ textarea.fc{resize:vertical;min-height:76px;}
 <section class="quote-ex" id="quote-example">
   <div class="s-label">견적서 예시</div>
   <div class="s-title">이런 견적서가<br>옵니다</div>
-  <p class="s-desc">이메일과 조건을 남겨주시면 총 3가지 옵션으로 견적서를 보내드립니다.<br>검토 후 항목 추가·삭제 요청도 자유롭게 가능해요.</p>
+  <p class="s-desc">이메일과 조건을 남겨주시면 3가지 옵션으로 항목별 견적서를 보내드립니다.<br>검토 후 항목 추가·삭제 요청도 자유롭게 가능해요.</p>
 
-  <div class="qex-cards">
-    <div class="qex-card">
-      <div class="qex-badge qex-a">OPTION A · 알뜰형</div>
-      <div class="qex-title">후쿠오카 2박3일<br>18홀 × 2일</div>
-      <ul class="qex-items">
-        <li>✈️ 후쿠오카 공항 픽업 · 드롭</li>
-        <li>⛳ 노캐디 2인 확정 골프장 2곳</li>
-        <li>🛏 비즈니스 호텔 2박</li>
-        <li>🚗 전 구간 정식 허가 차량</li>
-        <li>🚫 카트·2인 추가요금 포함</li>
-      </ul>
-      <div class="qex-price"><span class="qex-label">1인 총액</span><span class="qex-amount">45~55만원</span></div>
-      <div class="qex-note">* 항공권 별도 · 숙박 세금 포함</div>
+  <div class="qex-tabs">
+    <button class="qex-tab active" onclick="showTab('a')">OPTION A · 알뜰형</button>
+    <button class="qex-tab" onclick="showTab('b')">OPTION B · 스탠다드형 ⭐</button>
+    <button class="qex-tab" onclick="showTab('c')">OPTION C · 프리미엄형</button>
+  </div>
+
+  <!-- OPTION A -->
+  <div class="qex-doc active" id="qex-a">
+    <div class="qex-doc-head">
+      <div class="qex-co">
+        <div class="qex-co-name">2UP Golf · 노캐디 골프여행</div>
+        <div class="qex-co-sub">2인 확정 · 노캐디 · 운전 없는 일본 골프여행</div>
+      </div>
+      <div class="qex-meta">
+        <div class="qex-meta-title">견적서</div>
+        <div class="qex-meta-no">#2UP-001-A</div>
+        <div class="qex-meta-date">유효기간: 신청일로부터 7일</div>
+      </div>
     </div>
-
-    <div class="qex-card qex-highlight">
-      <div class="qex-badge qex-b">OPTION B · 스탠다드형</div>
-      <div class="qex-title">규슈 3박4일<br>18홀 × 3일</div>
-      <ul class="qex-items">
-        <li>✈️ 공항 픽업 · 드롭</li>
-        <li>⛳ 노캐디 2인 보장 골프장 3곳</li>
-        <li>🛏 온천 료칸 또는 호텔 3박</li>
-        <li>🚗 전 구간 송영</li>
-        <li>♨️ 온천 1회 포함</li>
-        <li>🚫 숨은 추가금 없음</li>
-      </ul>
-      <div class="qex-price"><span class="qex-label">1인 총액</span><span class="qex-amount">75~95만원</span></div>
-      <div class="qex-note">* 항공권 별도 · 가장 많이 선택하는 옵션</div>
+    <div class="qex-type-bar">
+      <span class="qex-type-label">옵션</span>
+      <span class="qex-type-val">OPTION A · 알뜰형</span>
     </div>
+    <div class="qex-plan">
+      <div class="qex-plan-title">여행 개요</div>
+      <div class="qex-plan-pills">
+        <span class="qex-plan-pill">📍 후쿠오카</span>
+        <span class="qex-plan-pill">🗓 2박 3일</span>
+        <span class="qex-plan-pill">👥 2인</span>
+        <span class="qex-plan-pill">⛳ 18홀 × 2라운드</span>
+        <span class="qex-plan-pill">🚫 노캐디 확정</span>
+      </div>
+    </div>
+    <table class="qex-table">
+      <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
+      <tbody>
+        <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
+        <tr><td>그린피 (2인 보장, 노캐디)</td><td>2라운드</td><td>₩160,000</td><td>₩320,000</td></tr>
+        <tr><td>카트비 (2인)</td><td>2회</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr><td>2인 추가요금</td><td>-</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr class="qex-cat"><td colspan="4">🛏 숙박</td></tr>
+        <tr><td>비즈니스 호텔 (세금 포함)</td><td>2박</td><td>₩85,000</td><td>₩170,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">🚗 이동</td></tr>
+        <tr><td>공항 픽업 · 드롭 (정식 허가 차량)</td><td>2회</td><td>₩25,000</td><td>₩50,000</td></tr>
+        <tr><td>골프장 이동 (왕복 × 2)</td><td>2회</td><td>₩20,000</td><td>₩40,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
+        <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩30,000</td></tr>
+      </tbody>
+    </table>
+    <div class="qex-doc-foot">
+      <div class="qex-total-row"><span class="qex-total-label">소계</span><span class="qex-total-val">₩610,000</span></div>
+      <div class="qex-grand"><span class="qex-grand-label">1인 합계</span><span class="qex-grand-val">₩610,000~</span></div>
+      <div class="qex-foot-note">✈️ 항공권 별도 · 환율 변동에 따라 ±5% 조정될 수 있습니다.<br>항목 추가(온천, 식사 등) 또는 삭제 요청 시 재견적 가능합니다.</div>
+    </div>
+  </div>
 
-    <div class="qex-card">
-      <div class="qex-badge qex-c">OPTION C · 프리미엄형</div>
-      <div class="qex-title">오사카·규슈 4박5일<br>18홀 × 3일</div>
-      <ul class="qex-items">
-        <li>✈️ 오사카 IN → 후쿠오카 OUT</li>
-        <li>⛳ 프리미엄 코스 3곳</li>
-        <li>🛏 디럭스 온천 료칸 4박</li>
-        <li>🚗 전 구간 전용 차량</li>
-        <li>♨️ 프라이빗 온천 포함</li>
-        <li>🍽 저녁 식사 2회 포함</li>
-      </ul>
-      <div class="qex-price"><span class="qex-label">1인 총액</span><span class="qex-amount">120~150만원</span></div>
-      <div class="qex-note">* 항공권 별도 · 맞춤 구성 가능</div>
+  <!-- OPTION B -->
+  <div class="qex-doc" id="qex-b">
+    <div class="qex-doc-head">
+      <div class="qex-co">
+        <div class="qex-co-name">2UP Golf · 노캐디 골프여행</div>
+        <div class="qex-co-sub">2인 확정 · 노캐디 · 운전 없는 일본 골프여행</div>
+      </div>
+      <div class="qex-meta">
+        <div class="qex-meta-title">견적서</div>
+        <div class="qex-meta-no">#2UP-001-B</div>
+        <div class="qex-meta-date">유효기간: 신청일로부터 7일</div>
+      </div>
+    </div>
+    <div class="qex-type-bar">
+      <span class="qex-type-label">옵션 · 가장 많이 선택</span>
+      <span class="qex-type-val">OPTION B · 스탠다드형 ⭐</span>
+    </div>
+    <div class="qex-plan">
+      <div class="qex-plan-title">여행 개요</div>
+      <div class="qex-plan-pills">
+        <span class="qex-plan-pill">📍 규슈 (후쿠오카·사가)</span>
+        <span class="qex-plan-pill">🗓 3박 4일</span>
+        <span class="qex-plan-pill">👥 2인</span>
+        <span class="qex-plan-pill">⛳ 18홀 × 3라운드</span>
+        <span class="qex-plan-pill">♨️ 온천 포함</span>
+      </div>
+    </div>
+    <table class="qex-table">
+      <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
+      <tbody>
+        <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
+        <tr><td>그린피 (2인 보장, 노캐디)</td><td>3라운드</td><td>₩170,000</td><td>₩510,000</td></tr>
+        <tr><td>카트비 (2인)</td><td>3회</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr><td>2인 추가요금</td><td>-</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr class="qex-cat"><td colspan="4">🛏 숙박</td></tr>
+        <tr><td>온천 료칸 (조식 포함)</td><td>2박</td><td>₩130,000</td><td>₩260,000</td></tr>
+        <tr><td>비즈니스 호텔</td><td>1박</td><td>₩75,000</td><td>₩75,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">♨️ 액티비티</td></tr>
+        <tr><td>대욕장 온천 입장</td><td>1회</td><td>₩15,000</td><td>₩15,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">🚗 이동</td></tr>
+        <tr><td>공항 픽업 · 드롭</td><td>2회</td><td>₩30,000</td><td>₩60,000</td></tr>
+        <tr><td>골프장 이동 (왕복 × 3)</td><td>3회</td><td>₩22,000</td><td>₩66,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
+        <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩50,000</td></tr>
+      </tbody>
+    </table>
+    <div class="qex-doc-foot">
+      <div class="qex-total-row"><span class="qex-total-label">소계</span><span class="qex-total-val">₩1,036,000</span></div>
+      <div class="qex-grand"><span class="qex-grand-label">1인 합계</span><span class="qex-grand-val">₩1,036,000~</span></div>
+      <div class="qex-foot-note">✈️ 항공권 별도 · 환율 변동에 따라 ±5% 조정될 수 있습니다.<br>항목 추가(저녁 식사, 관광 등) 또는 삭제 요청 시 재견적 가능합니다.</div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="qex-doc" id="qex-c">
+    <div class="qex-doc-head">
+      <div class="qex-co">
+        <div class="qex-co-name">2UP Golf · 노캐디 골프여행</div>
+        <div class="qex-co-sub">2인 확정 · 노캐디 · 운전 없는 일본 골프여행</div>
+      </div>
+      <div class="qex-meta">
+        <div class="qex-meta-title">견적서</div>
+        <div class="qex-meta-no">#2UP-001-C</div>
+        <div class="qex-meta-date">유효기간: 신청일로부터 7일</div>
+      </div>
+    </div>
+    <div class="qex-type-bar">
+      <span class="qex-type-label">옵션</span>
+      <span class="qex-type-val">OPTION C · 프리미엄형</span>
+    </div>
+    <div class="qex-plan">
+      <div class="qex-plan-title">여행 개요</div>
+      <div class="qex-plan-pills">
+        <span class="qex-plan-pill">📍 오사카 IN → 후쿠오카 OUT</span>
+        <span class="qex-plan-pill">🗓 4박 5일</span>
+        <span class="qex-plan-pill">👥 2인</span>
+        <span class="qex-plan-pill">⛳ 18홀 × 3라운드</span>
+        <span class="qex-plan-pill">♨️ 프라이빗 온천</span>
+      </div>
+    </div>
+    <table class="qex-table">
+      <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
+      <tbody>
+        <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
+        <tr><td>그린피 (프리미엄 코스, 노캐디)</td><td>3라운드</td><td>₩230,000</td><td>₩690,000</td></tr>
+        <tr><td>카트비 (2인)</td><td>3회</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr><td>2인 추가요금</td><td>-</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr class="qex-cat"><td colspan="4">🛏 숙박</td></tr>
+        <tr><td>디럭스 온천 료칸 (조·석식)</td><td>3박</td><td>₩190,000</td><td>₩570,000</td></tr>
+        <tr><td>시내 호텔 (4성급)</td><td>1박</td><td>₩100,000</td><td>₩100,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">♨️ 액티비티</td></tr>
+        <tr><td>프라이빗 노천 온천 (객실)</td><td>포함</td><td colspan="2"><span class="qex-incl">포함</span></td></tr>
+        <tr><td>저녁 식사 (이자카야 또는 현지 명식)</td><td>2회</td><td>₩40,000</td><td>₩80,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">🚗 이동</td></tr>
+        <tr><td>공항 픽업 · 드롭 (오사카/후쿠오카)</td><td>2회</td><td>₩40,000</td><td>₩80,000</td></tr>
+        <tr><td>전용 차량 (골프장 · 시내 전 구간)</td><td>4일</td><td>₩35,000</td><td>₩140,000</td></tr>
+        <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
+        <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩80,000</td></tr>
+      </tbody>
+    </table>
+    <div class="qex-doc-foot">
+      <div class="qex-total-row"><span class="qex-total-label">소계</span><span class="qex-total-val">₩1,740,000</span></div>
+      <div class="qex-grand"><span class="qex-grand-label">1인 합계</span><span class="qex-grand-val">₩1,740,000~</span></div>
+      <div class="qex-foot-note">✈️ 항공권 별도 · 환율 변동에 따라 ±5% 조정될 수 있습니다.<br>구성 맞춤 변경(골프장 지정, 숙소 업그레이드 등) 시 재견적 드립니다.</div>
     </div>
   </div>
 
@@ -538,6 +674,12 @@ if(new URLSearchParams(window.location.search).get("submitted")==="1"){
   document.getElementById("formCard").classList.add("submitted");
   document.getElementById("formSuccess").classList.add("show");
   document.getElementById("quote-form").scrollIntoView({behavior:"smooth"});
+}
+function showTab(opt){
+  document.querySelectorAll('.qex-doc').forEach(d=>d.classList.remove('active'));
+  document.querySelectorAll('.qex-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('qex-'+opt).classList.add('active');
+  event.target.classList.add('active');
 }
 function scrollToForm(){document.getElementById('quote-form').scrollIntoView({behavior:'smooth',block:'start'});}
 const today=new Date().toISOString().split('T')[0];
