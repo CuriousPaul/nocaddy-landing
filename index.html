@@ -144,7 +144,8 @@ textarea.fc{resize:vertical;min-height:76px;}
 .qex-plan-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
 .qex-plan-pills{display:flex;flex-wrap:wrap;gap:6px;}
 .qex-plan-pill{background:var(--white);border:1px solid rgba(26,92,58,.2);color:var(--green);font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;}
-.qex-table{width:100%;border-collapse:collapse;}
+.qex-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.qex-table{width:100%;border-collapse:collapse;min-width:380px;}
 .qex-table th{background:var(--gray-light);padding:10px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);text-align:left;}
 .qex-table th:last-child,.qex-table td:last-child{text-align:right;}
 .qex-table td{padding:12px 14px;font-size:13px;color:var(--charcoal);border-bottom:1px solid #f3f4f6;vertical-align:middle;}
@@ -232,6 +233,7 @@ textarea.fc{resize:vertical;min-height:76px;}
 
 <div class="trust">
   <div class="ti">✅ 합법 허가 차량만</div>
+  <div class="ti">💬 카카오톡 문의 가능</div>
   <div class="ti">✅ 2인 보장 골프장만</div>
   <div class="ti">✅ 취소 정책 명확</div>
 </div>
@@ -329,9 +331,10 @@ textarea.fc{resize:vertical;min-height:76px;}
         <span class="qex-plan-pill">👥 2인</span>
         <span class="qex-plan-pill">⛳ 18홀 × 2라운드</span>
         <span class="qex-plan-pill">🚫 노캐디 확정</span>
+        <span class="qex-plan-pill">🌳 예시: 주오GC · 미나미코 주오</span>
       </div>
     </div>
-    <table class="qex-table">
+    <div class="qex-table-wrap"><table class="qex-table">
       <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
       <tbody>
         <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
@@ -346,11 +349,12 @@ textarea.fc{resize:vertical;min-height:76px;}
         <tr class="qex-cat"><td colspan="4">📋 기타</td></tr>
         <tr><td>서비스 수수료</td><td>-</td><td>-</td><td>₩30,000</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="qex-doc-foot">
-      <div class="qex-total-row"><span class="qex-total-label">소계</span><span class="qex-total-val">₩610,000</span></div>
-      <div class="qex-grand"><span class="qex-grand-label">1인 합계</span><span class="qex-grand-val">₩610,000~</span></div>
-      <div class="qex-foot-note">✈️ 항공권 별도 · 환율 변동에 따라 ±5% 조정될 수 있습니다.<br>항목 추가(온천, 식사 등) 또는 삭제 요청 시 재견적 가능합니다.</div>
+      <div class="qex-total-row"><span class="qex-total-label">소계 (1인)</span><span class="qex-total-val">₩610,000</span></div>
+      <div class="qex-total-row"><span class="qex-total-label">✈️ 항공권 예상 (인천↔후쿠오카 왕복)</span><span class="qex-total-val">₩250,000~350,000</span></div>
+      <div class="qex-grand"><span class="qex-grand-label">1인 예상 총데 (항공 포함)</span><span class="qex-grand-val">₩860,000~</span></div>
+      <div class="qex-foot-note">환율 확정 시점 기준으로 견적이 확정됩니다. 항목 추가(온천, 식사 등) 또는 삭제 요청 시 재견적 가능합니다.</div>
     </div>
   </div>
 
@@ -379,9 +383,10 @@ textarea.fc{resize:vertical;min-height:76px;}
         <span class="qex-plan-pill">👥 2인</span>
         <span class="qex-plan-pill">⛳ 18홀 × 3라운드</span>
         <span class="qex-plan-pill">♨️ 온천 포함</span>
+        <span class="qex-plan-pill">🌳 예시: 사가CC · 후쿠오카나카GC</span>
       </div>
     </div>
-    <table class="qex-table">
+    <div class="qex-table-wrap"><table class="qex-table">
       <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
       <tbody>
         <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
@@ -401,9 +406,10 @@ textarea.fc{resize:vertical;min-height:76px;}
       </tbody>
     </table>
     <div class="qex-doc-foot">
-      <div class="qex-total-row"><span class="qex-total-label">소계</span><span class="qex-total-val">₩1,036,000</span></div>
-      <div class="qex-grand"><span class="qex-grand-label">1인 합계</span><span class="qex-grand-val">₩1,036,000~</span></div>
-      <div class="qex-foot-note">✈️ 항공권 별도 · 환율 변동에 따라 ±5% 조정될 수 있습니다.<br>항목 추가(저녁 식사, 관광 등) 또는 삭제 요청 시 재견적 가능합니다.</div>
+      <div class="qex-total-row"><span class="qex-total-label">소계 (1인)</span><span class="qex-total-val">₩1,036,000</span></div>
+      <div class="qex-total-row"><span class="qex-total-label">✈️ 항공권 예상 (인천↔후쿠오카 왕복)</span><span class="qex-total-val">₩250,000~400,000</span></div>
+      <div class="qex-grand"><span class="qex-grand-label">1인 예상 총데 (항공 포함)</span><span class="qex-grand-val">₩1,286,000~</span></div>
+      <div class="qex-foot-note">환율 확정 시점 기준으로 견적이 확정됩니다. 항목 추가(저녁 식사, 관광 등) 또는 삭제 요청 시 재견적 가능합니다.</div>
     </div>
   </div>
 
@@ -430,11 +436,12 @@ textarea.fc{resize:vertical;min-height:76px;}
         <span class="qex-plan-pill">📍 오사카 IN → 후쿠오카 OUT</span>
         <span class="qex-plan-pill">🗓 4박 5일</span>
         <span class="qex-plan-pill">👥 2인</span>
+        <span class="qex-plan-pill">🌳 예시: 오사카 GC · 벨루디코스 사가</span>
         <span class="qex-plan-pill">⛳ 18홀 × 3라운드</span>
         <span class="qex-plan-pill">♨️ 프라이빗 온천</span>
       </div>
     </div>
-    <table class="qex-table">
+    <div class="qex-table-wrap"><table class="qex-table">
       <thead><tr><th>항목</th><th>수량</th><th>단가 (1인)</th><th>소계</th></tr></thead>
       <tbody>
         <tr class="qex-cat"><td colspan="4">⛳ 골프</td></tr>
@@ -455,9 +462,10 @@ textarea.fc{resize:vertical;min-height:76px;}
       </tbody>
     </table>
     <div class="qex-doc-foot">
-      <div class="qex-total-row"><span class="qex-total-label">소계</span><span class="qex-total-val">₩1,740,000</span></div>
-      <div class="qex-grand"><span class="qex-grand-label">1인 합계</span><span class="qex-grand-val">₩1,740,000~</span></div>
-      <div class="qex-foot-note">✈️ 항공권 별도 · 환율 변동에 따라 ±5% 조정될 수 있습니다.<br>구성 맞춤 변경(골프장 지정, 숙소 업그레이드 등) 시 재견적 드립니다.</div>
+      <div class="qex-total-row"><span class="qex-total-label">소계 (1인)</span><span class="qex-total-val">₩1,740,000</span></div>
+      <div class="qex-total-row"><span class="qex-total-label">✈️ 항공권 예상 (외신항코스 포함)</span><span class="qex-total-val">₩300,000~450,000</span></div>
+      <div class="qex-grand"><span class="qex-grand-label">1인 예상 총데 (항공 포함)</span><span class="qex-grand-val">₩2,040,000~</span></div>
+      <div class="qex-foot-note">환율 확정 시점 기준으로 견적이 확정됩니다. 구성 맞춤 변경(골프장 지정, 숙소 업그레이드 등) 시 재견적 드립니다.</div>
     </div>
   </div>
 
@@ -642,7 +650,7 @@ textarea.fc{resize:vertical;min-height:76px;}
   <div class="fq"><div class="fqq">2인 보장이 뭔가요?</div><p class="fqa">2인 보장(2サム保証) 골프장만 판매합니다. 2명이 신청해도 조인 없이 둘이서만 플레이 확정.</p></div>
   <div class="fq"><div class="fqq">일본에서 운전해야 하나요?</div><p class="fqa">전혀요. 공항→숙소→골프장 전 구간 정식 허가 차량이 이동합니다.</p></div>
   <div class="fq"><div class="fqq">총액에 숨은 추가금 있나요?</div><p class="fqa">없습니다. 카트·2인 추가요금·숙소 세금 모두 견적서에 명시합니다. 현장 추가 결제 없음.</p></div>
-  <div class="fq"><div class="fqq">연락은 어떻게 오나요?</div><p class="fqa">신청하신 이메일로만 답변드립니다. 전화·문자 없음. 스팸함도 확인해주세요.</p></div>
+  <div class="fq"><div class="fqq">연락은 어떻게 오나요?</div><p class="fqa">견적 신청 후 24시간 이내 이메일로 답변드립니다. 긇한 문의는 카카오톡 채널로도 연락하실 수 있어요 → <a href="http://pf.kakao.com/2upgolf" style="color:var(--green);font-weight:700;">@2UPGolf</a>. 스팸함도 확인해주세요.</p></div>
 </section>
 
 <div class="spacer"></div>
