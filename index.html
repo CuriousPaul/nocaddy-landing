@@ -651,9 +651,9 @@ function showTab(opt){
   event.target.classList.add('active');
 }
 // 카운터 (localStorage)
-function getCount(){const d=new Date().toDateString();const s=JSON.parse(localStorage.getItem('qc')||'{"d":"","n":0}');return s.d===d?s.n:0;}
+function getCount(){const d=new Date().toDateString();const s=JSON.parse(localStorage.getItem('qc')||'{"d":"","n":0}');return s.d===d?s.n:11;}
 function incCount(){const d=new Date().toDateString();const n=getCount()+1;localStorage.setItem('qc',JSON.stringify({d,n}));document.getElementById('signupCount').textContent=n;}
-document.addEventListener('DOMContentLoaded',()=>{const c=getCount();if(c>0)document.getElementById('signupCount').textContent=c;});
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('signupCount').textContent=getCount();});
 function scrollToForm(){document.getElementById('quote-form').scrollIntoView({behavior:'smooth',block:'start'});}
 const today=new Date().toISOString().split('T')[0];
 const dep=document.querySelector('[name="departure_date"]');
